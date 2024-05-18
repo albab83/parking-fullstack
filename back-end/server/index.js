@@ -23,40 +23,6 @@ connection.connect(function (error) {
 
 module.exports = connection
 
-app.post('/pengendara', async (req, res) => {
-   try {
-      const { nama_pengendara, jenis_kendaraan, no_kendaraan, jam_masuk } =
-         req.body
-      const [{ insertId }] = await connection.promise().query(
-         `INSERT INTO users (nama_pengendara,jenis_kendaraan, no_kendaraan, jam_masuk) 
-           VALUES (?, ?,?)`,
-         [nama_pengendara, jenis_kendaraan, no_kendaraan, jam_masuk]
-      )
-      res.status(202).json({
-         message: 'User Created',
-      })
-   } catch (err) {
-      res.status(500).json({
-         message: err,
-      })
-   }
-})
-
-app.get('/pengendara', async (req, res) => {
-   try {
-      const data = await connection
-         .promise()
-         .query(`SELECT *  from data_pengendara;`)
-      res.status(202).json({
-         pengendara: data[0],
-      })
-   } catch (err) {
-      res.status(500).json({
-         message: err,
-      })
-   }
-})
-
 app.listen(PORT, () => {
    console.log(`Server listening on ${PORT}`)
 })
