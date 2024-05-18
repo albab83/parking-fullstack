@@ -32,9 +32,6 @@ const Navbar = () => {
 
          {/* Desktop Navigation */}
          <ul className="hidden md:flex">
-            {data.map((item) => (
-               <li className="m-2 p-4">{item.message}</li>
-            ))}
             <li className="p-4 hover:bg-gray-900 hover:text-white rounded-xl m-2 cursor-pointer duration-300">
                <motion.div
                   className="w-full"
