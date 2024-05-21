@@ -1,0 +1,15 @@
+GET http://localhost:3000/data
+
+###
+
+POST http://localhost:3000/data
+Content-Type: application/json
+
+{
+    "nama": "udin",
+    "jenis_kendaraan": "mobil",
+    "no_kendaraan": "14-72-99",
+    "jam_masuk":"" ,
+    "jam_keluar":""
+
+}

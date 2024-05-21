@@ -1,28 +1,33 @@
-const express = require('express')
+import express from 'express'
+import mysql from 'mysql2'
+import cors from 'cors'
+import Pengendara from './routes/Pengendara.js'
 
-const PORT = process.env.PORT || 3001
-
-const app = express()
-
-const mysql = require('mysql2')
-const connection = mysql.createConnection({
+const db = mysql.createConnection({
    host: 'localhost',
    user: 'root',
    password: '',
    database: 'parking',
 })
+export default db
+
+db.connect((err) => {
+   if (err) throw err
+   console.log('mysql connected')
+})
+
+const app = express()
+app.use(cors())
 
 app.use(express.json())
-connection.connect(function (error) {
-   if (!!error) {
-      console.log(error)
-   } else {
-      console.log('Koneksi Berhasil!')
-   }
+
+app.get('/', (req, res) => {
+   res.json({
+      status: 200,
+      message: 'data pengendara',
+   })
 })
 
-module.exports = connection
+app.use('/data_pengendara', Pengendara)
 
-app.listen(PORT, () => {
-   console.log(`Server listening on ${PORT}`)
-})
+app.listen(3000, () => console.log('server running'))

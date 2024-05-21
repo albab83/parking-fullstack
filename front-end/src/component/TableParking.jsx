@@ -6,7 +6,7 @@ const TableParking = () => {
    const [dataPengendara, setDataPengendara] = useState([])
 
    useEffect(() => {
-      fetch('http://localhost:3000/dataPengendara')
+      fetch('http://localhost:3000/data_pengendara')
          .then((data) => {
             return data.json()
          })
@@ -49,8 +49,8 @@ const TableParking = () => {
                   <tr>
                      <th className="py-5">Nama</th>
                      <th>Jenis Kendaraan</th>
-                     <th>Jam Masuk</th>
                      <th>No Kendaraan</th>
+                     <th>Jam Masuk</th>
                      <th>Action</th>
                   </tr>
                </thead>
@@ -58,9 +58,9 @@ const TableParking = () => {
                   {dataPengendara.map((pengendara, id) => (
                      <tr key={id} className="border-b">
                         <td className="py-3">{pengendara.nama}</td>
-                        <td className="py-3">{pengendara.jenis}</td>
-                        <td className="py-3">{pengendara.jam_masuk}</td>
+                        <td className="py-3">{pengendara.jenis_kendaraan}</td>
                         <td className="py-3">{pengendara.no_kendaraan}</td>
+                        <td className="py-3">{pengendara.jam_masuk}</td>
                         <td className="py-3">
                            <button className="bg-red-600 p-2 rounded-md hover:bg-red-500">
                               <BiExit className="text-white" />
