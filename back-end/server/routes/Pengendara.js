@@ -14,18 +14,56 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
    const q = 'INSERT INTO data_pengendara SET ?'
 
-   const values = {
-      id_pengendara: req.body.id_pengendara,
-      nama: req.body.nama,
-      jenis_kendaraan: req.body.jenis_kendaraan,
-      no_kendaraan: req.body.no_kendaraan,
-      jam_masuk: req.body.jam_masuk,
-      jam_keluar: req.body.jam_keluar,
-   }
-   db.query(q, [values], (err, data) => {
+   const values = req.body
+
+   db.query(q, values, (err, Data) => {
       if (err) return res.json(err)
-      return res.json('create success' + data)
+      return res.json('create success' + Data)
    })
+})
+
+router.delete('/(:id)', function (req, res) {
+   let id = req.params.id
+
+   db.query(
+      `SELECT * FROM data_pengendara WHERE id_pengendara = ${id}`,
+      function (err, rows) {
+         if (err) {
+            return res.status(500).json({
+               status: false,
+               message: 'Internal Server Error',
+            })
+         }
+
+         // if post not found
+         if (rows.length <= 0) {
+            return res.status(404).json({
+               status: false,
+               message: 'Data Post Not Found!',
+            })
+         }
+         // if post found
+         else {
+            // Perform deletion query
+            db.query(
+               `DELETE FROM data_pengendara WHERE id_pengendara = ${id}`,
+               function (err) {
+                  if (err) {
+                     return res.status(500).json({
+                        status: false,
+                        message: 'Failed to delete data',
+                     })
+                  }
+                  // Successful deletion
+                  return res.status(200).json({
+                     status: true,
+                     message: 'Data Post Deleted Successfully',
+                  })
+               }
+            )
+         }
+      }
+   )
 })
 
 export default router

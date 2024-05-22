@@ -18,7 +18,6 @@ db.connect((err) => {
 
 const app = express()
 app.use(cors())
-
 app.use(express.json())
 
 app.get('/', (req, res) => {
@@ -30,4 +29,4 @@ app.get('/', (req, res) => {
 
 app.use('/data_pengendara', Pengendara)
 
-app.listen(3000, () => console.log('server running'))
+app.listen(3000, () => console.log('server running di port ' + 3000))

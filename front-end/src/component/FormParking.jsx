@@ -10,8 +10,8 @@ const validate = (values) => {
       errors.nama = 'Tidak boleh lebih dari 15 karakter'
    }
 
-   if (!values.jenis) {
-      errors.jenis = 'Tolong isi Jenis'
+   if (!values.jenis_kendaraan) {
+      errors.jenis_kendaraan = 'Tolong isi Jenis'
    }
 
    if (!values.no_kendaraan) {
@@ -29,10 +29,9 @@ const FormParking = () => {
    const formik = useFormik({
       initialValues: {
          nama: '',
-         jenis: '',
-         jam_masuk: showTime + ' ' + showDate,
-         mulai_parkir: '',
+         jenis_kendaraan: '',
          no_kendaraan: '',
+         jam_masuk: showTime + ' ' + showDate,
       },
       validate,
       onSubmit: async (Data) => {
@@ -47,22 +46,16 @@ const FormParking = () => {
          }
 
          const user = await axios
-            .get('http://localhost:3000/dataPengendara')
+            .get('http://localhost:3000/data_pengendara')
             .then((res) => checkDataPengendara(res.data, Data))
 
          if (user)
             alert('data sudah ada') // do whatever you want here with the existence user store.
          else
-            await axios.post('http://localhost:3000/dataPengendara', Data),
-               {
-                  headers: {
-                     'Content-Type': 'application/json',
-                  },
-               }
-
-         formik.resetForm({
-            values: { nama: '', jenis: '', no_kendaraan: '' },
-         })
+            await axios.post('http://localhost:3000/data_pengendara', Data),
+               formik.resetForm({
+                  values: { nama: '', jenis_kendaraan: '', no_kendaraan: '' },
+               })
       },
    })
 
@@ -106,16 +99,16 @@ const FormParking = () => {
                   <select
                      className=" p-2 rounded-md w-full font-semibold text-slate-400"
                      id="kendaraan"
-                     name="jenis"
+                     name="jenis_kendaraan"
                      onChange={handleFormInput}
                   >
                      <option value="mobil">Mobil</option>
                      <option value="motor">Motor</option>
                   </select>
 
-                  {formik.errors.jenis ? (
+                  {formik.errors.jenis_kendaraan ? (
                      <div className="text-red-500 text-sm mt-1">
-                        {formik.errors.jenis}
+                        {formik.errors.jenis_kendaraan}
                      </div>
                   ) : null}
                </div>

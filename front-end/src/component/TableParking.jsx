@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { BiExit } from 'react-icons/bi'
 import { motion } from 'framer-motion'
+import axios from 'axios'
 
 const TableParking = () => {
    const [dataPengendara, setDataPengendara] = useState([])
@@ -19,6 +20,10 @@ const TableParking = () => {
             }
          })
    })
+
+   const handleDelete = (id) => {
+      axios.delete(`http://localhost:3000/data_pengendara/${id}`)
+   }
 
    return (
       <motion.div
@@ -62,7 +67,12 @@ const TableParking = () => {
                         <td className="py-3">{pengendara.no_kendaraan}</td>
                         <td className="py-3">{pengendara.jam_masuk}</td>
                         <td className="py-3">
-                           <button className="bg-red-600 p-2 rounded-md hover:bg-red-500">
+                           <button
+                              onClick={() =>
+                                 handleDelete(pengendara.id_pengendara)
+                              }
+                              className="bg-red-600 p-2 rounded-md hover:bg-red-500"
+                           >
                               <BiExit className="text-white" />
                            </button>
                         </td>
