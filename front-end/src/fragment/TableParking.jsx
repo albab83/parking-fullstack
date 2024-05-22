@@ -23,6 +23,7 @@ const TableParking = () => {
 
    const handleDelete = (id) => {
       axios.delete(`http://localhost:3000/data_pengendara/${id}`)
+      confirm('Apakah anda yakin ingin menghapus data ini?')
    }
 
    return (

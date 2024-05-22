@@ -1,4 +1,4 @@
-GET http://localhost:3000/data
+GET http://localhost:3000/data_pengendara
 
 ###
 

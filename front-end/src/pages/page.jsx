@@ -1,7 +1,7 @@
-import FormParking from '../component/FormParking'
-import Navbar from '../component/Navbar'
-import TableParking from '../component/TableParking'
-import Footer from '../component/Footer'
+import FormParking from '../fragment/FormParking'
+import Navbar from '../fragment/Navbar'
+import TableParking from '../fragment/TableParking'
+import Footer from '../fragment/Footer'
 
 const Page = () => {
    return (

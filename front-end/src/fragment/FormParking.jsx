@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { useFormik } from 'formik'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const validate = (values) => {
    const errors = {}
@@ -53,9 +54,8 @@ const FormParking = () => {
             alert('data sudah ada') // do whatever you want here with the existence user store.
          else
             await axios.post('http://localhost:3000/data_pengendara', Data),
-               formik.resetForm({
-                  values: { nama: '', jenis_kendaraan: '', no_kendaraan: '' },
-               })
+               formik.resetForm()
+         window.open('/archive-page', '_self')
       },
    })
 
@@ -97,11 +97,13 @@ const FormParking = () => {
 
                <div className="mb-3">
                   <select
-                     className=" p-2 rounded-md w-full font-semibold text-slate-400"
+                     className=" p-2 rounded-md w-full text-slate-400"
                      id="kendaraan"
                      name="jenis_kendaraan"
                      onChange={handleFormInput}
+                     value={formik.values.jenis_kendaraan}
                   >
+                     <option value="mobil/motor">Mobil/Motor</option>
                      <option value="mobil">Mobil</option>
                      <option value="motor">Motor</option>
                   </select>

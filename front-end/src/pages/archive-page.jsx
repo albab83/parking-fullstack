@@ -1,6 +1,6 @@
-import TableArchive from '../component/TableArchive'
-import Navbar from '../component/Navbar'
-import Footer from '../component/Footer'
+import TableArchive from '../fragment/TableArchive'
+import Navbar from '../fragment/Navbar'
+import Footer from '../fragment/Footer'
 
 const ArchivePage = () => {
    return (

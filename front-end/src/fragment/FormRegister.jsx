@@ -1,5 +1,4 @@
 import React from 'react'
-import { useFormik } from 'formik'
 import { Link } from 'react-router-dom'
 
 const FormRegister = () => {
@@ -41,7 +40,7 @@ const FormRegister = () => {
                   <div className="flex text-slate-500">
                      <p className="font-normal">
                         Sudah Punya Akun?{' '}
-                        <Link to={'/'}>
+                        <Link to={'/page'}>
                            <span>
                               <a
                                  className="text-blue-600 font-bold hover:underline"

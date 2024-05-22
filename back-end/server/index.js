@@ -13,7 +13,7 @@ export default db
 
 db.connect((err) => {
    if (err) throw err
-   console.log('mysql connected')
+   console.log('mysql Berhasil Terkoneksi')
 })
 
 const app = express()
@@ -29,4 +29,4 @@ app.get('/', (req, res) => {
 
 app.use('/data_pengendara', Pengendara)
 
-app.listen(3000, () => console.log('server running di port ' + 3000))
+app.listen(3000, () => console.log('server berjalan di port ' + 3000))
