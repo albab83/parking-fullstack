@@ -1,38 +1,46 @@
 import { motion } from 'framer-motion'
 import { useFormik } from 'formik'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import moment from 'moment'
+import 'moment/locale/id'
 
-const validate = (values) => {
-   const errors = {}
-   if (!values.nama) {
-      errors.nama = 'nama harus terisi'
-   } else if (values.nama.length > 15) {
-      errors.nama = 'Tidak boleh lebih dari 15 karakter'
-   }
-
-   if (!values.jenis_kendaraan) {
-      errors.jenis_kendaraan = 'Tolong isi Jenis'
-   }
-
-   if (!values.no_kendaraan) {
-      errors.no_kendaraan = 'Tolong isi Nomor Kendaraan'
-   }
-
-   return errors
-}
-
+const apiPengendara = import.meta.env.VITE_API_PENGENDARA
 const FormParking = () => {
-   const date = new Date()
-   const showTime = `${date.getHours()}:${date.getMinutes()}`
-   const showDate = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+   const timeCurrent = () => {
+      // Set the locale to Indonesian
+      moment.locale('id')
+
+      // Get the current time and date
+      const Time = moment().format('HH:mm')
+
+      return Time
+   }
+
+   const validate = (values) => {
+      const errors = {}
+      if (!values.nama) {
+         errors.nama = 'nama harus terisi'
+      } else if (values.nama.length > 15) {
+         errors.nama = 'Tidak boleh lebih dari 15 karakter'
+      }
+
+      if (!values.jenis_kendaraan) {
+         errors.jenis_kendaraan = 'Tolong isi Jenis'
+      }
+
+      if (!values.no_kendaraan) {
+         errors.no_kendaraan = 'Tolong isi Nomor Kendaraan'
+      }
+
+      return errors
+   }
 
    const formik = useFormik({
       initialValues: {
          nama: '',
          jenis_kendaraan: '',
          no_kendaraan: '',
-         jam_masuk: showTime + ' ' + showDate,
+         jam_masuk: timeCurrent(),
       },
       validate,
       onSubmit: async (Data) => {
@@ -47,15 +55,14 @@ const FormParking = () => {
          }
 
          const user = await axios
-            .get('http://localhost:3000/data_pengendara')
+            .get(`${apiPengendara}data_pengendara`)
             .then((res) => checkDataPengendara(res.data, Data))
 
          if (user)
             alert('data sudah ada') // do whatever you want here with the existence user store.
          else
-            await axios.post('http://localhost:3000/data_pengendara', Data),
+            await axios.post(`${apiPengendara}data_pengendara`, Data),
                formik.resetForm()
-         window.open('/archive-page', '_self')
       },
    })
 
@@ -103,7 +110,7 @@ const FormParking = () => {
                      onChange={handleFormInput}
                      value={formik.values.jenis_kendaraan}
                   >
-                     <option value="mobil/motor">Mobil/Motor</option>
+                     <option value="">Mobil/Motor</option>
                      <option value="mobil">Mobil</option>
                      <option value="motor">Motor</option>
                   </select>

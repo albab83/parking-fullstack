@@ -4,7 +4,7 @@ import FormRegister from '../fragment/FormRegister'
 const RegisterPage = () => {
    return (
       <div>
-         <FormRegister></FormRegister>
+         <FormRegister />
       </div>
    )
 }

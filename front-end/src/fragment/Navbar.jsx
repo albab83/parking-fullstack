@@ -58,6 +58,21 @@ const Navbar = () => {
                   </NavLink>
                </motion.div>
             </li>
+
+            <li className="p-4 hover:bg-gray-900 hover:text-white rounded-xl m-2 cursor-pointer duration-300">
+               <NavLink
+                  className={({ isActive, isPending }) =>
+                     isPending
+                        ? 'pending'
+                        : isActive
+                          ? 'active text-blue-400 font-bold'
+                          : ''
+                  }
+                  to={'/'}
+               >
+                  Logout
+               </NavLink>
+            </li>
          </ul>
 
          {/* Mobile Navigation Icon */}

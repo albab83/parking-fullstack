@@ -1,32 +1,27 @@
 import express from 'express'
-import mysql from 'mysql2'
+import db from './config/Database.js'
 import cors from 'cors'
 import Pengendara from './routes/Pengendara.js'
-
-const db = mysql.createConnection({
-   host: 'localhost',
-   user: 'root',
-   password: '',
-   database: 'parking',
-})
-export default db
-
-db.connect((err) => {
-   if (err) throw err
-   console.log('mysql Berhasil Terkoneksi')
-})
+import Calculate from './routes/calculate.js'
 
 const app = express()
 app.use(cors())
 app.use(express.json())
 
+db.connect()
+
 app.get('/', (req, res) => {
    res.json({
       status: 200,
-      message: 'data pengendara',
+      message: 'selamat datang di server',
    })
 })
 
-app.use('/data_pengendara', Pengendara)
+// Routes
 
-app.listen(3000, () => console.log('server berjalan di port ' + 3000))
+app.use('/data_pengendara', Pengendara)
+app.use('/calculate', Calculate)
+
+app.listen(5000, () => {
+   console.log('server berjalan di port 5000')
+})

@@ -1,5 +1,5 @@
 import express from 'express'
-import db from '../index.js'
+import db from '../config/Database.js'
 const router = express.Router()
 
 router.get('/', (req, res) => {
@@ -14,12 +14,16 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
    const q = 'INSERT INTO data_pengendara SET ?'
 
-   const values = req.body
+   const { nama, jenis_kendaraan, no_kendaraan, jam_masuk } = req.body
 
-   db.query(q, values, (err, Data) => {
-      if (err) return res.json(err)
-      return res.json('create success' + Data)
-   })
+   db.query(
+      q,
+      { nama, jenis_kendaraan, no_kendaraan, jam_masuk },
+      (err, Data) => {
+         if (err) return res.json(err)
+         return res.json('create success' + Data)
+      }
+   )
 })
 
 router.delete('/(:id)', function (req, res) {

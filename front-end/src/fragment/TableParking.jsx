@@ -6,24 +6,40 @@ import axios from 'axios'
 const TableParking = () => {
    const [dataPengendara, setDataPengendara] = useState([])
 
+   const apiPengendara = import.meta.env.VITE_API_PENGENDARA
+
    useEffect(() => {
-      fetch('http://localhost:3000/data_pengendara')
-         .then((data) => {
-            return data.json()
-         })
-         .then((datas) => {
-            setDataPengendara(datas)
-         })
-         .catch((err) => {
-            if (err.name === 'AbortError') {
-               console.log('fetch aborted.')
-            }
-         })
+      const fetchData = async () => {
+         try {
+            const response = await axios.get(`${apiPengendara}data_pengendara`)
+            setDataPengendara(response.data)
+         } catch (error) {
+            console.error('Error fetching data:', error)
+         }
+      }
+
+      fetchData()
    })
 
-   const handleDelete = (id) => {
-      axios.delete(`http://localhost:3000/data_pengendara/${id}`)
-      confirm('Apakah anda yakin ingin menghapus data ini?')
+   const handleDelete = async (id) => {
+      console.log(id)
+      try {
+         // Mengirim permintaan DELETE ke backend
+         await axios.delete(`${apiPengendara}data_pengendara/${id}`, {
+            headers: {
+               'Content-Type': 'application/json',
+            },
+         })
+
+         // Jika penghapusan berhasil, perbarui UI secara lokal
+         // Misalnya, hapus item dari daftar atau re-fetch data dari server
+         // Di sini Anda bisa memanggil fungsi untuk memperbarui tampilan
+         // Contoh:
+         // Fungsi fetchData() akan memperbarui data yang ditampilkan di UI
+      } catch (error) {
+         // Tangani kesalahan jika permintaan gagal
+         console.error('Error deleting data:', error)
+      }
    }
 
    return (
@@ -61,24 +77,28 @@ const TableParking = () => {
                   </tr>
                </thead>
                <tbody id="data-parkir" className="text-center">
-                  {dataPengendara.map((pengendara, id) => (
-                     <tr key={id} className="border-b">
-                        <td className="py-3">{pengendara.nama}</td>
-                        <td className="py-3">{pengendara.jenis_kendaraan}</td>
-                        <td className="py-3">{pengendara.no_kendaraan}</td>
-                        <td className="py-3">{pengendara.jam_masuk}</td>
-                        <td className="py-3">
-                           <button
-                              onClick={() =>
-                                 handleDelete(pengendara.id_pengendara)
-                              }
-                              className="bg-red-600 p-2 rounded-md hover:bg-red-500"
-                           >
-                              <BiExit className="text-white" />
-                           </button>
-                        </td>
-                     </tr>
-                  ))}
+                  {Array.isArray(dataPengendara) &&
+                     dataPengendara.map((pengendara, id) => (
+                        // Render table rows here
+                        <tr key={id} className="border-b">
+                           <td className="py-3">{pengendara.nama}</td>
+                           <td className="py-3">
+                              {pengendara.jenis_kendaraan}
+                           </td>
+                           <td className="py-3">{pengendara.no_kendaraan}</td>
+                           <td className="py-3">{pengendara.jam_masuk}</td>
+                           <td className="py-3">
+                              <button
+                                 onClick={() =>
+                                    handleDelete(pengendara.id_pengendara)
+                                 }
+                                 className="bg-red-600 p-2 rounded-md hover:bg-red-500"
+                              >
+                                 <BiExit className="text-white" />
+                              </button>
+                           </td>
+                        </tr>
+                     ))}
                </tbody>
             </table>
          </div>

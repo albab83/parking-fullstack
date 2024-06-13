@@ -13,3 +13,16 @@ Content-Type: application/json
     "jam_keluar":""
 
 }
+###
+POST http://localhost:5000/register
+Content-Type: application/json
+
+{
+    "nama": "sanud",
+    "email": "sanud@gmail.com",
+    "password": "maman12398"
+
+}
+
+###
+DELETE http://localhost:5000/data_pengendara/110
